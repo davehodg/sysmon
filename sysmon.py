@@ -18,13 +18,13 @@ def remote_call(command):
 
     try:
         ssh_key = RSAKey.from_private_key_file(key_path)
-        print("Found SSH key at self {key_path}")
+        print(f"Found SSH key at self {key_path}")
     except SSHException as e:
         print(e)
 
     try:
-        system("ssh-copy-id -i {key_path}.pub {username}@{host}>/dev/null 2>&1")
-        print("{key_path} uploaded to {host}")
+        system(f"ssh-copy-id -i {key_path}.pub {username}@{host}>/dev/null 2>&1")
+        print(f"{key_path} uploaded to {host}")
     except FileNotFoundError as error:
         print(error)
 
@@ -40,7 +40,7 @@ def remote_call(command):
             timeout=5000,
             )
     except AuthenticationException as e:
-        print("Authentication failed: did you remember to create an SSH key? {e}")
+        print(f"Authentication failed: did you remember to create an SSH key? {e}")
         raise e
 
     stdin, stdout, stderr = client.exec_command(command)
